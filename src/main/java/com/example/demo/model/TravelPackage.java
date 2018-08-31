@@ -2,11 +2,14 @@ package com.example.demo.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @Entity
 public class TravelPackage {
@@ -15,9 +18,9 @@ public class TravelPackage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int travelPackageId;
 	private String packageName;
-	@OneToMany(mappedBy = "travelPackage")
+	@OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
 	private List<Services> availableServiceList;
-	@OneToMany(mappedBy = "travelPackage")
+	@OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
 	private List<Image> images;
 	private String description;
 
@@ -61,4 +64,26 @@ public class TravelPackage {
 		this.description = description;
 	}
 
+	@PrePersist
+	public void saveRelationships() {
+		createRelationships();
+	}
+
+	@PreUpdate
+	public void updateRelationships() {
+		createRelationships();
+	}
+
+	private void createRelationships() {
+		if (this.availableServiceList != null) {
+			for (Services services : this.availableServiceList) {
+				services.setTravelPackage(this);
+			}
+		}
+		if (this.images != null) {
+			for (Image image : this.images) {
+				image.setTravelPackage(this);
+			}
+		}
+	}
 }

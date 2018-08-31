@@ -41,7 +41,7 @@ public class TravelPackageService {
 		return travelPackage;
 	}
 
-	public Services findAllService(int serviceId) {
+	public Services findService(int serviceId) {
 		return servicesRepository.findById(serviceId).get();
 	}
 
@@ -59,9 +59,23 @@ public class TravelPackageService {
 		return imageRepository.save(image);
 	}
 
+	public void deleteAllTravelPackage() {
+		deleteAllService();
+		travelPackageRepository.deleteAll();
+	}
+
 	public void deleteAllService() {
 		imageRepository.deleteAll();
 		servicesRepository.deleteAll();
+	}
+
+	public TravelPackage findTravelPackage(int travelPackageId) {
+		return travelPackageRepository.findById(travelPackageId).get();
+	}
+
+	public void deleteTravelPackage(int travelPackageId) {
+		travelPackageRepository.deleteById(travelPackageId);
+
 	}
 
 }
