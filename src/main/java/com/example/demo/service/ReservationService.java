@@ -15,5 +15,10 @@ public class ReservationService {
 	public Iterable<Reservation> findAllReservation() {
 		return reservationRepository.findAll();
 	}
+//
+//	public Reservation saveAllReservation(Reservation reservation) {
+//		reservation = reservationRepository.save(reservation);
+//
+//	}
 
 }
