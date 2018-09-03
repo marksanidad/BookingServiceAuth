@@ -19,13 +19,11 @@ public class AuthenticationService {
 
 	public String authenticateLogin(Customer customer) {
 		String newToken = "";
-		if (customerRepository.findByUserName(customer.getUserName())) {
+		if (customerRepository.findByUserName(customer.getUserName()) != null) {
 			TokenCreator tokenCreator = new TokenCreator();
 			newToken = tokenCreator.encode(customer);
-			System.out.println("customer created");
 		} else {
-			System.out.println("Error");
-			throw new RuntimeException("Error");
+			throw new RuntimeException("Invalid Input");
 		}
 		return newToken;
 	}
