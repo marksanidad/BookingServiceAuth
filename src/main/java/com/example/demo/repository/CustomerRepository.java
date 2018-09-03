@@ -10,4 +10,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
 	public Customer findByUserNameAndPassword(String userName, String password);
 
+	public Boolean existsByUserNameAndPassword(String userName, String password);
+
 }

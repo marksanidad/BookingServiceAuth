@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,13 +28,14 @@ public class CustomerController {
 
 	// Get all Customers
 	@GetMapping
-	public List<Customer> getAllCustomers() {
+	public List<Customer> getAllCustomers(@RequestHeader(value = "Authentication-Token") String token) {
 		return (List<Customer>) customerService.findAllCustomers();
 	}
 
 	// Post a Customer
 	@PostMapping
-	public Customer saveCustomer(@RequestBody Customer customer) {
+	public Customer saveCustomer(@RequestHeader(value = "Authentication-Token") String token,
+			@RequestBody Customer customer) {
 		return customerService.saveCustomer(customer);
 	}
 
@@ -50,27 +52,31 @@ public class CustomerController {
 
 	// Get a specific Customer using CustomerID
 	@GetMapping("/{customerId}")
-	public Customer getCustomer(@PathVariable("customerId") int customerId) {
+	public Customer getCustomer(@RequestHeader(value = "Authentication-Token") String token,
+			@PathVariable("customerId") int customerId) {
 		return customerService.findByCustomerId(customerId);
 	}
 
 	// Post a Customer in a specific CustomerID
 	@PostMapping("/{customerId}")
-	public Customer saveCustomerID(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
+	public Customer saveCustomerID(@RequestHeader(value = "Authentication-Token") String token,
+			@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
 		customer.setCustomerId(customerId);
 		return customerService.saveCustomer(customer);
 	}
 
 	// Update a Customer in a specific CustomerID
 	@PutMapping("/{customerId}")
-	public Customer putCustomerID(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
+	public Customer putCustomerID(@RequestHeader(value = "Authentication-Token") String token,
+			@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
 		customer.setCustomerId(customerId);
 		return customerService.saveCustomer(customer);
 	}
 
 	// Delete a Customer in a specific CustomerID
 	@DeleteMapping("/{customerId}")
-	public void deleteCustomerID(@PathVariable("customerId") int customerId) {
+	public void deleteCustomerID(@RequestHeader(value = "Authentication-Token") String token,
+			@PathVariable("customerId") int customerId) {
 		customerService.deleteCustomer(customerService.findByCustomerId(customerId));
 	}
 

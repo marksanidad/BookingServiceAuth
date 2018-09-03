@@ -25,7 +25,9 @@ public class AuthenticationService {
 		String newToken = "";
 		Customer newCustomer = customerRepository.findByUserNameAndPassword(customer.getUserName(),
 				customer.getPassword());
-		if (newCustomer != null) {
+		Boolean existToken = customerRepository.existsByUserNameAndPassword(customer.getUserName(),
+				customer.getPassword());
+		if (newCustomer != null && !existToken) {
 			TokenCreator tokenCreator = new TokenCreator();
 			Authentication authentication = new Authentication();
 			newToken = tokenCreator.encode(customer);
@@ -34,8 +36,14 @@ public class AuthenticationService {
 			authenticationRepository.save(authentication);
 		}
 
-		else {
-			throw new RuntimeException("Invalid Input");
+		else if (newCustomer != null && existToken) {
+			authenticationRepository.deleteAll(authenticationRepository.findByCustomer(newCustomer));
+			TokenCreator tokenCreator = new TokenCreator();
+			Authentication authentication = new Authentication();
+			newToken = tokenCreator.encode(customer);
+			authentication.setCustomer(newCustomer);
+			authentication.setToken(newToken);
+			authenticationRepository.save(authentication);
 		}
 		return newToken;
 	}
