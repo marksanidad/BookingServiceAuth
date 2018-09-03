@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Services;
+import com.example.demo.model.Service;
 import com.example.demo.model.TravelPackage;
 import com.example.demo.service.TravelPackageService;
 
@@ -26,26 +26,31 @@ public class TravelPackageController {
 		this.travelPackageService = travelPackageService;
 	}
 
+	// Get All TravelPackages
 	@GetMapping
 	public List<TravelPackage> findAllTravelPackage() {
 		return (List<TravelPackage>) travelPackageService.findAllTravelPackage();
 	}
 
+	// Post a TravelPackage
 	@PostMapping
 	public TravelPackage saveAllTravelPackage(@RequestBody TravelPackage travelPackage) {
 		return travelPackageService.saveAllTravelPackage(travelPackage);
 	}
 
+	// Delete All TravelPackages
 	@DeleteMapping
 	public void deleteAllTravelPackage() {
 		travelPackageService.deleteAllTravelPackage();
 	}
 
+	// Get a specific TravelPackage using TravelPackageID
 	@GetMapping("/{travelPackageId}")
 	public TravelPackage findTravelPackage(@PathVariable("travelPackageId") int travelPackageId) {
-		return travelPackageService.findTravelPackage(travelPackageId);
+		return travelPackageService.findTravelPackageId(travelPackageId);
 	}
 
+	// Update a specific TravelPackage using TravelPackageID
 	@PutMapping("/{travelPackageId}")
 	public TravelPackage updateTravelPackage(@PathVariable("travelPackageId") int travelPackageId,
 			@RequestBody TravelPackage travelPackage) {
@@ -53,20 +58,23 @@ public class TravelPackageController {
 		return travelPackageService.saveTravelPackage(travelPackage);
 	}
 
+	// Delete a specific TravelPackage using TravelPackageID
 	@DeleteMapping("/{travelPackageId}")
 	public void deleteTravelPackage(@PathVariable("travelPackageId") int travelPackageId) {
 		travelPackageService.deleteTravelPackage(travelPackageId);
 	}
 
+	// Get all TravelPackageServices by using TravelPackageID
 	@GetMapping("/{travelPackageId}/services")
-	public List<Services> findAllTravelPackageService(@PathVariable("travelPackageId") int travelPackageId) {
-		return travelPackageService.findTravelPackage(travelPackageId).getAvailableServiceList();
+	public List<Service> findAllTravelPackageService(@PathVariable("travelPackageId") int travelPackageId) {
+		return travelPackageService.findTravelPackageId(travelPackageId).getAvailableServiceList();
 	}
 
+	// Post a TravelPackageService in a specific TravelPackageID
 	@PostMapping("/{travelPackageId}/services")
-	public Services saveAllTravelPackageService(@PathVariable("travelPackageId") int travelPackageId,
-			@RequestBody Services services) {
-		services.setTravelPackage(travelPackageService.findTravelPackage(travelPackageId));
+	public Service saveAllTravelPackageService(@PathVariable("travelPackageId") int travelPackageId,
+			@RequestBody Service services) {
+		services.setTravelPackage(travelPackageService.findTravelPackageId(travelPackageId));
 		return travelPackageService.saveService(services);
 	}
 
@@ -77,9 +85,12 @@ public class TravelPackageController {
 //
 //	}
 
+	// Delete a TravelPackage Service in a specific TravelPackageID
 	@DeleteMapping("/{travelPackageId}/services")
 	public void deleteAllTravelPackageService(@PathVariable("travelPackageId") int travelPackageId) {
-		travelPackageService.deleteTravelPackageService(findAllTravelPackageService(travelPackageId));
+		TravelPackage travel = travelPackageService.findTravelPackageId(travelPackageId);
+		List<Service> services = travelPackageService.findByTravelPackage(travel);
+		travelPackageService.deleteTravelPackageService(services);
 	}
 
 }

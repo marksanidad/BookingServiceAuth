@@ -20,7 +20,7 @@ public class Image {
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "service_id")
-	private Services service;
+	private Service service;
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "travel_package_id")
@@ -50,11 +50,11 @@ public class Image {
 		this.imageUrl = imageUrl;
 	}
 
-	public Services getService() {
+	public Service getService() {
 		return service;
 	}
 
-	public void setService(Services service) {
+	public void setService(Service service) {
 		this.service = service;
 	}
 

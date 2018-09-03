@@ -13,13 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 @Entity
-@JsonIdentityInfo(generator = PropertyGenerator.class, property = "serviceId")
-public class Services {
+public class Service {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

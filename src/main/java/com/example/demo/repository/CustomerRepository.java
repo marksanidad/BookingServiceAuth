@@ -8,4 +8,6 @@ import com.example.demo.model.Customer;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
+	public Customer findByUserName(String userName);
+
 }

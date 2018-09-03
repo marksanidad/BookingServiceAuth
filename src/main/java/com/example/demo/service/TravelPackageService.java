@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Image;
-import com.example.demo.model.Services;
+import com.example.demo.model.Service;
 import com.example.demo.model.TravelPackage;
 import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.ServiceRepository;
@@ -26,14 +26,14 @@ public class TravelPackageService {
 	}
 
 	@Transactional
-	public Iterable<TravelPackage> findAllTravelPackage() {
-		return travelPackageRepository.findAll();
+	public List<TravelPackage> findAllTravelPackage() {
+		return (List<TravelPackage>) travelPackageRepository.findAll();
 	}
 
 	@Transactional
 	public TravelPackage saveAllTravelPackage(TravelPackage travelPackage) {
 		travelPackage = travelPackageRepository.save(travelPackage);
-		for (Services allService : travelPackage.getAvailableServiceList()) {
+		for (Service allService : travelPackage.getAvailableServiceList()) {
 			allService.setTravelPackage(travelPackage);
 			saveService(allService);
 		}
@@ -45,12 +45,12 @@ public class TravelPackageService {
 	}
 
 	@Transactional
-	public Services findService(int serviceId) {
+	public Service findService(int serviceId) {
 		return servicesRepository.findById(serviceId).get();
 	}
 
 	@Transactional
-	public Services saveService(Services service) {
+	public Service saveService(Service service) {
 		service = servicesRepository.save(service);
 		for (Image allImage : service.getImages()) {
 			allImage.setService(service);
@@ -78,7 +78,7 @@ public class TravelPackageService {
 	}
 
 	@Transactional
-	public TravelPackage findTravelPackage(int travelPackageId) {
+	public TravelPackage findTravelPackageId(int travelPackageId) {
 		return travelPackageRepository.findById(travelPackageId).get();
 	}
 
@@ -93,7 +93,12 @@ public class TravelPackageService {
 	}
 
 	@Transactional
-	public void deleteTravelPackageService(List<Services> travelPackage) {
-		servicesRepository.deleteAll(travelPackage);
+	public void deleteTravelPackageService(List<Service> services) {
+		servicesRepository.deleteAll(services);
+	}
+
+	@Transactional
+	public List<Service> findByTravelPackage(TravelPackage travelPackage) {
+		return servicesRepository.findByTravelPackage(travelPackage);
 	}
 }

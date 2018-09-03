@@ -16,7 +16,7 @@ public class ServiceFee {
 	private int serviceFeeId;
 	private float amount;
 	@ManyToOne
-	private Services service;
+	private Service service;
 	private LocalDate startDate;
 
 	public int getServiceFeeId() {
@@ -35,11 +35,11 @@ public class ServiceFee {
 		this.amount = amount;
 	}
 
-	public Services getService() {
+	public Service getService() {
 		return service;
 	}
 
-	public void setService(Services service) {
+	public void setService(Service service) {
 		this.service = service;
 	}
 

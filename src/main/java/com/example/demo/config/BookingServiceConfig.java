@@ -3,10 +3,12 @@ package com.example.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.repository.AuthenticationRepository;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.ServiceRepository;
 import com.example.demo.repository.TravelPackageRepository;
+import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.TravelPackageService;
 
@@ -23,4 +25,11 @@ public class BookingServiceConfig {
 			ServiceRepository serviceRepository, ImageRepository imageRepository) {
 		return new TravelPackageService(serviceRepository, imageRepository, travelPackageRepository);
 	}
+
+	@Bean
+	AuthenticationService authenticationService(AuthenticationRepository authenticationRepository,
+			CustomerRepository customerRepository) {
+		return new AuthenticationService(authenticationRepository, customerRepository);
+	}
+
 }

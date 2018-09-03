@@ -17,8 +17,8 @@ public class CustomerService {
 	}
 
 	@Transactional
-	public Iterable<Customer> findAllCustomers() {
-		return customerRepository.findAll();
+	public List<Customer> findAllCustomers() {
+		return (List<Customer>) customerRepository.findAll();
 	}
 
 	@Transactional
@@ -42,7 +42,8 @@ public class CustomerService {
 	}
 
 	@Transactional
-	public Iterable<Customer> saveAllCustomer(List<Customer> customer) {
-		return customerRepository.saveAll(customer);
+	public List<Customer> saveAllCustomer(List<Customer> customer) {
+		return (List<Customer>) customerRepository.saveAll(customer);
 	}
+
 }

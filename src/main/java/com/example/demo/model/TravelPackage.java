@@ -19,7 +19,7 @@ public class TravelPackage {
 	private int travelPackageId;
 	private String packageName;
 	@OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
-	private List<Services> availableServiceList;
+	private List<Service> availableServiceList;
 	@OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
 	private List<Image> images;
 	private String description;
@@ -40,11 +40,11 @@ public class TravelPackage {
 		this.packageName = packageName;
 	}
 
-	public List<Services> getAvailableServiceList() {
+	public List<Service> getAvailableServiceList() {
 		return availableServiceList;
 	}
 
-	public void setAvailableServiceList(List<Services> availableServiceList) {
+	public void setAvailableServiceList(List<Service> availableServiceList) {
 		this.availableServiceList = availableServiceList;
 	}
 
@@ -76,7 +76,7 @@ public class TravelPackage {
 
 	private void createRelationships() {
 		if (this.availableServiceList != null) {
-			for (Services services : this.availableServiceList) {
+			for (Service services : this.availableServiceList) {
 				services.setTravelPackage(this);
 			}
 		}

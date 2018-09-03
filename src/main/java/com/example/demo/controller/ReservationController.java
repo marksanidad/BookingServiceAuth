@@ -10,7 +10,5 @@ public class ReservationController {
 		super();
 		this.reservationService = reservationService;
 	}
-	
-	@GetMapping
-	public 
+
 }

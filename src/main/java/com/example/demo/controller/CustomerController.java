@@ -25,11 +25,13 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
+	// Get all Customers
 	@GetMapping
 	public List<Customer> getAllCustomers() {
 		return (List<Customer>) customerService.findAllCustomers();
 	}
 
+	// Post a Customer
 	@PostMapping
 	public Customer saveCustomer(@RequestBody Customer customer) {
 		return customerService.saveCustomer(customer);
@@ -40,28 +42,33 @@ public class CustomerController {
 //		return (List<Customer>) customerService.saveAllCustomer(customer);
 //	}
 
+	// Delete all Customers
 	@DeleteMapping
 	public void deleteAllCustomer() {
 		customerService.deleteAllCustomer();
 	}
 
+	// Get a specific Customer using CustomerID
 	@GetMapping("/{customerId}")
 	public Customer getCustomer(@PathVariable("customerId") int customerId) {
 		return customerService.findByCustomerId(customerId);
 	}
 
+	// Post a Customer in a specific CustomerID
 	@PostMapping("/{customerId}")
 	public Customer saveCustomerID(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
 		customer.setCustomerId(customerId);
 		return customerService.saveCustomer(customer);
 	}
 
+	// Update a Customer in a specific CustomerID
 	@PutMapping("/{customerId}")
 	public Customer putCustomerID(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
 		customer.setCustomerId(customerId);
 		return customerService.saveCustomer(customer);
 	}
 
+	// Delete a Customer in a specific CustomerID
 	@DeleteMapping("/{customerId}")
 	public void deleteCustomerID(@PathVariable("customerId") int customerId) {
 		customerService.deleteCustomer(customerService.findByCustomerId(customerId));
