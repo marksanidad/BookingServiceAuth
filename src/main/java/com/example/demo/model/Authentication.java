@@ -19,6 +19,7 @@ public class Authentication {
 	@JsonIgnore
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+	private String token;
 
 	public int getAuthenticationId() {
 		return authenticationId;
@@ -34,6 +35,14 @@ public class Authentication {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

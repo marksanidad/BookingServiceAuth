@@ -25,7 +25,7 @@ public class TravelPackageService {
 		this.travelPackageRepository = travelPackageRepository;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<TravelPackage> findAllTravelPackage() {
 		return (List<TravelPackage>) travelPackageRepository.findAll();
 	}
@@ -44,7 +44,7 @@ public class TravelPackageService {
 		return travelPackage;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Service findService(int serviceId) {
 		return servicesRepository.findById(serviceId).get();
 	}
@@ -77,7 +77,7 @@ public class TravelPackageService {
 		servicesRepository.deleteAll();
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public TravelPackage findTravelPackageId(int travelPackageId) {
 		return travelPackageRepository.findById(travelPackageId).get();
 	}
@@ -97,7 +97,7 @@ public class TravelPackageService {
 		servicesRepository.deleteAll(services);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Service> findByTravelPackage(TravelPackage travelPackage) {
 		return servicesRepository.findByTravelPackage(travelPackage);
 	}

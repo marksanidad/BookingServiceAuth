@@ -16,12 +16,12 @@ public class CustomerService {
 		this.customerRepository = customerRepository;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Customer> findAllCustomers() {
 		return (List<Customer>) customerRepository.findAll();
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Customer findByCustomerId(int customerId) {
 		return customerRepository.findById(customerId).get();
 	}
